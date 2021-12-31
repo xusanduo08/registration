@@ -1,0 +1,99 @@
+@themeColor: #40a9ff;
+@borderColor: #d1d5db;
+@placeholderColor: #bfbfbf;
+@formErrorColor: #f5222d;
+@labelWidth: 130px;
+
+.formItem{
+  margin: 6px;
+  display: flex;
+  flex-direction: column;
+  span.label{
+    display: inline-block;
+    width: @labelWidth;
+    text-align: right;
+    padding-right: 10px;
+  }
+  &>div>input{
+    border: 1px solid @borderColor;
+    border-radius: 6px;
+    padding: 8px;
+    line-height: 20px;
+    min-width: 280px;
+    outline: none;
+    transition: all 0.3s;
+    &:hover{
+      border-color: @themeColor;
+    }
+    &:focus{
+      border-color: @themeColor;
+      box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+    }
+    &::-webkit-input-placeholder {
+      color: @placeholderColor;
+    }
+    &::-ms-input-placeholder {
+      color: @placeholderColor;
+    }
+    &::placeholder {
+      color: @placeholderColor;
+    }
+  }
+
+  :global{
+    .ant-spin-nested-loading{
+      display: inline-block;
+    }
+  }
+}
+.hasError {
+  .formItem();
+  &>div>input{
+    border-color: @formErrorColor;
+    &:hover, &:focus{
+      border-color: @formErrorColor;
+    }
+  }
+  .info{
+    color: @formErrorColor;
+    padding: 0;
+    text-align: left;
+    width: auto;
+  }
+}
+.info{
+  margin-left: @labelWidth;
+}
+
+.upload{
+  margin-right: 10px;
+  display: inline-block;
+  width: 104px;
+  height: 104px;
+  background-color: #fafafa;
+  border: 1px dashed @borderColor;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: top;
+  transition: border-color .3s ease;
+  position: relative;
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &:hover:not([disabled]){
+    border-color: @themeColor;
+  }
+  .delete {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    cursor: pointer;
+  }
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
