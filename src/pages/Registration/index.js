@@ -149,7 +149,7 @@ function App(props) {
         {addressFormItem}
         {driveLicenseFormItem}
         {appointmentTimeFormItem}
-        <div className={styles.submit}>
+        <div className="submit">
           <button type="button" onClick={onSubmit} disabled={btnDisabled}>
             Submit
           </button>
