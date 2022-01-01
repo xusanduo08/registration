@@ -8,6 +8,7 @@ export default defineConfig({
     { path: '/', component: '@/pages/Login' },
     { path: '/regist', component: '@/pages/Registration' },
     { path: '/login', component: '@/pages/Login' },
+    { path: '/dashboard', component: '@/pages/Dashboard' },
   ],
   fastRefresh: {},
   proxy: {
