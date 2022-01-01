@@ -4,17 +4,17 @@
 @formErrorColor: #f5222d;
 @labelWidth: 130px;
 
-.formItem{
-  margin: 6px;
+.formItem {
+  margin: 6px 0 6px 0;
   display: flex;
   flex-direction: column;
-  span.label{
+  span.label {
     display: inline-block;
     width: @labelWidth;
     text-align: right;
     padding-right: 10px;
   }
-  &>div>input{
+  & > div > input {
     border: 1px solid @borderColor;
     border-radius: 6px;
     padding: 8px;
@@ -22,10 +22,10 @@
     min-width: 280px;
     outline: none;
     transition: all 0.3s;
-    &:hover{
+    &:hover {
       border-color: @themeColor;
     }
-    &:focus{
+    &:focus {
       border-color: @themeColor;
       box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
     }
@@ -40,32 +40,33 @@
     }
   }
 
-  :global{
-    .ant-spin-nested-loading{
+  :global {
+    .ant-spin-nested-loading {
       display: inline-block;
     }
   }
 }
 .hasError {
   .formItem();
-  &>div>input{
+  & > div > input {
     border-color: @formErrorColor;
-    &:hover, &:focus{
+    &:hover,
+    &:focus {
       border-color: @formErrorColor;
     }
   }
-  .info{
+  .info {
     color: @formErrorColor;
     padding: 0;
     text-align: left;
     width: auto;
   }
 }
-.info{
+.info {
   margin-left: @labelWidth;
 }
 
-.upload{
+.upload {
   margin-right: 10px;
   display: inline-block;
   width: 104px;
@@ -76,15 +77,15 @@
   cursor: pointer;
   text-align: center;
   vertical-align: top;
-  transition: border-color .3s ease;
+  transition: border-color 0.3s ease;
   position: relative;
-  div{
+  div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  &:hover:not([disabled]){
+  &:hover:not([disabled]) {
     border-color: @themeColor;
   }
   .delete {
