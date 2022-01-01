@@ -1,54 +1,60 @@
-import { history } from 'umi';
+import { history, Link } from 'umi';
+import { JSEncrypt } from 'jsencrypt';
+import { connect } from 'react-redux';
+import { Spin } from 'antd';
+import { publicKey } from '../../utils';
 import { useFormItem } from '../../components';
 import styles from './index.less';
 
-function Login() {
+function Login(props) {
+  const { dispatch, loading } = props;
   const [userNameFormItem, userNameValidate, userName] = useFormItem({
     label: 'User Name',
     type: 'INPUT',
     required: true,
     formItemProps: { placeholder: 'Please input your name' },
-    validator: (value, callback) => {
-      if (value && value.length > 10) {
-        callback('Please input normal name!');
-        return false;
-      }
-      return true;
-    },
   });
 
   const [pwdFormItem, pwdValidate, pwd] = useFormItem({
     label: 'Password',
     type: 'INPUT',
     required: true,
-    formItemProps: { placeholder: 'Please input password' },
-    validator: (value, callback) => {
-      if (value && value.length > 10) {
-        callback('Please input normal name!');
-        return false;
-      }
-      return true;
-    },
+    formItemProps: { placeholder: 'Please input password', type: 'password' },
   });
 
-  function onSubmit() {
-    history.push('/regist');
+  async function onSubmit() {
+    if (userNameValidate() && pwdValidate()) {
+      const encrypt = new JSEncrypt();
+      encrypt.setPublicKey(publicKey);
+      const encryptedPwd = encrypt.encrypt(pwd);
+      const loginResult = await dispatch({
+        type: 'regist/login',
+        payload: { userName, pwd: encryptedPwd },
+      });
+      history.push('/dashboard');
+    }
   }
 
   return (
-    <div className="app">
-      <form>
-        {userNameFormItem}
-        {pwdFormItem}
-
-        <div className={styles.submit}>
-          <button type="button" onClick={onSubmit} disabled={false}>
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+    <Spin spinning={loading}>
+      <div className="app">
+        <form>
+          {userNameFormItem}
+          {pwdFormItem}
+          <span className={styles.goToRegist}>
+            Don't have an account yet? <Link to="/regist">Create one</Link>
+          </span>
+          <div className="submit">
+            <button type="button" onClick={onSubmit} disabled={false}>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </Spin>
   );
 }
 
-export default Login;
+export default connect((state) => ({
+  loading: state.loading.models.regist || false,
+}))(Login);
