@@ -1,12 +1,8 @@
 import { useEffect } from 'react';
-import { Layout, Menu, Breadcrumb, Table } from 'antd';
+import { Layout, Menu, Table } from 'antd';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
 // 登录后的用户中心
@@ -14,7 +10,7 @@ import styles from './index.less';
 function Dashboard(props) {
   const { dispatch, subsList } = props;
   const { SubMenu } = Menu;
-  const { Header, Content, Sider, data } = Layout;
+  const { Header, Content, Sider } = Layout;
 
   // 菜单通过接口查出来
   useEffect(() => {
@@ -32,9 +28,7 @@ function Dashboard(props) {
     {
       title: 'Date of Birth',
       dataIndex: 'dateOfBirth',
-      render: (text) => {
-        return moment(text).format('MM/DD/YYYY');
-      },
+      render: (text) => moment(text).format('MM/DD/YYYY'),
     },
     {
       title: 'Address',
@@ -43,9 +37,7 @@ function Dashboard(props) {
     {
       title: 'Appointmen Time',
       dataIndex: 'appointmentTime',
-      render: (text) => {
-        return moment(text).format('MM/DD/YYYY');
-      },
+      render: (text) => moment(text).format('MM/DD/YYYY'),
     },
   ];
 

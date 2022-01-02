@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export const publicKey = `
 -----BEGIN PUBLIC KEY-----
 MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGrnvL2PMQjACBESFfbQllsHo7tw

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { extend } from 'umi-request';
 
 const request = extend({});
@@ -9,7 +10,7 @@ export function regist(data) {
   //   data,
   // })
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         code: '200',
@@ -44,7 +45,7 @@ export function qryMenus(data) {
 }
 
 export function qrySubsList(data) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         code: '200',

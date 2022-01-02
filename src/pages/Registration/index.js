@@ -1,15 +1,13 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { history } from 'umi';
 import { Spin } from 'antd';
 import { get } from 'lodash';
 import { useFormItem } from '../../components';
-import styles from './index.less';
 
 function App(props) {
   const { dispatch, loading } = props;
-  const nameRef = useRef();
   const [btnDisabled, setBtnDisabled] = useState(false);
 
   const [nameFormItem, nameValidate, name] = useFormItem({
@@ -77,7 +75,7 @@ function App(props) {
       accept: 'image/*, .heic',
     }, // heic为iPhone手机拍照格式
     uploadUrl: '/upload',
-    beforeUploadValidator: (file, callback) => {
+    beforeUploadValidator: (file) => {
       // 上传前的校验，返回true则继续上传至文件服务器，否则终止上传。value为一个file对象
       const { type } = file || {};
       const typeList = [
@@ -95,7 +93,7 @@ function App(props) {
       console.log(true);
       return true;
     },
-    onSuccess: (file) => {
+    onSuccess: () => {
       // 上传成功，返回文件的存储地址，以及文件的其他信息
       // { status: 'done', uid: '', name: '', attachUrl: '' }
     },
@@ -134,7 +132,7 @@ function App(props) {
     },
   });
 
-  const [confirmPwdFormItem, confirmPwdvalidate, confirmPwd] = useFormItem({
+  const [confirmPwdFormItem, confirmPwdvalidate] = useFormItem({
     label: 'Confirm Password',
     type: 'INPUT',
     required: true,
@@ -168,7 +166,9 @@ function App(props) {
       !emailValite() ||
       !addressValite() ||
       !driveLicenseValite() ||
-      !appointmentTimeValite()
+      !appointmentTimeValite() ||
+      !pwdvalidate() ||
+      !confirmPwdvalidate()
     ) {
       return;
     }
@@ -184,6 +184,7 @@ function App(props) {
         address,
         driveLicense,
         appointmentTime: moment(appointmentTime).valueOf(),
+        pwd,
       },
     });
     if (registResult) {

@@ -10,7 +10,7 @@ import styles from './form.less';
 // FormItem
 // input/DatePicker/Upload
 
-export function useFormItem(params) {
+function useFormItem(params) {
   const {
     label,
     required = false,
@@ -43,7 +43,7 @@ export function useFormItem(params) {
   }
 
   function onFileUpload(e) {
-    let file = event.target.files[0]; //获取图片资源
+    const file = e.target.files[0]; // 获取图片资源
     // 限制图片大小不超过5M
     if (get(file, 'size') > 1024 * 1024 * 5) {
       message.warning('Picture size > 5M, please another one. ');
@@ -189,3 +189,5 @@ export function useFormItem(params) {
     value,
   ];
 }
+
+export default useFormItem;

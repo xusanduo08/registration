@@ -31,7 +31,9 @@ function Login(props) {
         type: 'regist/login',
         payload: { userName, pwd: encryptedPwd },
       });
-      history.push('/dashboard');
+      if (loginResult) {
+        history.push('/dashboard');
+      }
     }
   }
 
@@ -42,7 +44,8 @@ function Login(props) {
           {userNameFormItem}
           {pwdFormItem}
           <span className={styles.goToRegist}>
-            Don't have an account yet? <Link to="/regist">Create one</Link>
+            Don&apos;t have an account yet?
+            <Link to="/regist">Create one</Link>
           </span>
           <div className="submit">
             <button type="button" onClick={onSubmit} disabled={false}>
