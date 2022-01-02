@@ -49,7 +49,7 @@ function Login(props) {
           </span>
           <div className="submit">
             <button type="button" onClick={onSubmit} disabled={false}>
-              Submit
+              Login
             </button>
           </div>
         </form>
