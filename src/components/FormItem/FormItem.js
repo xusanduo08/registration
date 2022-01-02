@@ -18,6 +18,7 @@ function useFormItem(params) {
     formItemProps = {},
     beforeUploadValidator,
     onSuccess,
+    uploadUrl,
   } = params || {};
   const [value, setValue] = useState(); // 保存控件值
   const [hasError, setHasError] = useState(params.hasError); // 控制控件状态（校验通过、不通过）
@@ -63,7 +64,7 @@ function useFormItem(params) {
       setuploadDisabled(true);
       const formData = new FormData();
       formData.append('file', file);
-      request('/upload', {
+      request(uploadUrl, {
         method: 'post',
         data: formData,
         requestType: 'form',
