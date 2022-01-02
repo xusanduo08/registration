@@ -2,6 +2,8 @@
 
 ## 启动
 
+node > 16
+
 Install dependencies,
 
 ```bash
