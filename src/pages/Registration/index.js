@@ -90,10 +90,8 @@ function App(props) {
         'image/tiff',
       ];
       if (typeList.indexOf(type) === -1) {
-        console.log(type);
         return false;
       }
-      console.log(true);
       return true;
     },
     onSuccess: () => {
