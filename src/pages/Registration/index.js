@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { JSEncrypt } from 'jsencrypt';
 import { history } from 'umi';
-import { Spin } from 'antd';
+import { Spin, message } from 'antd';
 import { get } from 'lodash';
 import { useFormItem } from '../../components';
+import { publicKey } from '../../utils';
 
 function App(props) {
   const { dispatch, loading } = props;
@@ -39,12 +41,11 @@ function App(props) {
     required: true,
     formItemProps: { placeholder: 'Please input your phone number.' },
     validator: (value, callback) => {
-      if (value && value.length !== 12) {
-        // 或许有其他规则，暂定校验长度为12位
-        callback('This phone number is invalid');
-        return false;
-      }
-      if (!/^[0-9]+$/.test(value)) {
+      if (
+        !/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(
+          value,
+        )
+      ) {
         callback('This phone number is invalid');
         return false;
       }
@@ -182,6 +183,9 @@ function App(props) {
     }
     e.preventDefault();
     setBtnDisabled(true);
+    const encrypt = new JSEncrypt();
+    encrypt.setPublicKey(publicKey);
+    const encryptedPwd = encrypt.encrypt(pwd);
     const registResult = await dispatch({
       type: 'regist/regist',
       payload: {
@@ -192,12 +196,14 @@ function App(props) {
         address,
         driveLicense,
         appointmentTime: moment(appointmentTime).valueOf(),
-        pwd,
+        pwd: encryptedPwd,
       },
     });
     if (registResult) {
       // TODO 跳转登陆页面
-      history.push('/login');
+      message
+        .success('Regist successfully, redirect to login after 2s...', 2)
+        .then(() => history.push('/login'));
     } else {
       setBtnDisabled(false);
     }
