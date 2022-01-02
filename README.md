@@ -16,6 +16,8 @@ $ yarn start
 
 ## 项目大致结构
 
+
+```
 ├── assets
 │   ├── delete.svg
 │   ├── logo.svg
@@ -41,6 +43,7 @@ $ yarn start
 ├── services
 │   └── index.js
 └── utils.js
+```
 
 assets中存放一些资源，例如图片，svg等；
 
@@ -81,7 +84,7 @@ admin用户进来后默认查询用户列表并进行展示
 
 npm run build
 
-File              Size                        Gzipped
-
- dist/umi.js       1.4 MB                      440.0 KB
- dist/umi.css      237.9 KB                    29.3 KB
+| File        | Size   | Gzipped  |
+| ----------- | ------ | -------- |
+| dist/umi.js | 1.4 MB | 440.0 KB |
+|dist/umi.css  |    237.9 KB        |            29.3 KB|
