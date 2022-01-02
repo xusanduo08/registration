@@ -81,6 +81,7 @@ antd，lodash，moment
 ### 注册
 
 路由：/regist
+
 名称、地址、出生日期、appointment time、photo仅设置必填校验；手机号码仅校验13位长度；邮箱做格式校验
 
 ### dashboard
