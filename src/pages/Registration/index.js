@@ -2,11 +2,13 @@ import { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { history } from 'umi';
+import { Spin } from 'antd';
+import { get } from 'lodash';
 import { useFormItem } from '../../components';
 import styles from './index.less';
 
 function App(props) {
-  const { dispatch } = props;
+  const { dispatch, loading } = props;
   const nameRef = useRef();
   const [btnDisabled, setBtnDisabled] = useState(false);
 
@@ -37,6 +39,10 @@ function App(props) {
     validator: (value, callback) => {
       if (value && value.length !== 12) {
         // 或许有其他规则，暂定校验长度为12位
+        callback('This phone number is invalid');
+        return false;
+      }
+      if (!/^[0-9]+$/.test(value)) {
         callback('This phone number is invalid');
         return false;
       }
@@ -94,6 +100,55 @@ function App(props) {
       // { status: 'done', uid: '', name: '', attachUrl: '' }
     },
   });
+
+  const [pwdFormItem, pwdvalidate, pwd] = useFormItem({
+    label: 'Password',
+    type: 'INPUT',
+    required: true,
+    formItemProps: {
+      placeholder: 'Please input your password.',
+      type: 'password',
+    },
+    validator: (value, callback) => {
+      // 长度大于6，包含大些字母，包含小写字母，包含数字
+      if (get(value, 'length') < 6) {
+        callback("Password's length must over 6");
+        return false;
+      }
+      if (!/[A-Z]+/.test(value)) {
+        callback('Must contain an uppercase letter.');
+        return false;
+      }
+
+      if (!/[a-z]+/.test(value)) {
+        callback('Must contain a lowercase letter.');
+        return false;
+      }
+
+      if (!/[0-9]+/.test(value)) {
+        callback('Must contain a number.');
+        return false;
+      }
+
+      return true;
+    },
+  });
+
+  const [confirmPwdFormItem, confirmPwdvalidate, confirmPwd] = useFormItem({
+    label: 'Confirm Password',
+    type: 'INPUT',
+    required: true,
+    formItemProps: { placeholder: 'Confirm your password.', type: 'password' },
+    validator: (value, callback) => {
+      if (value !== pwd) {
+        callback('Password is not same.');
+        return false;
+      }
+
+      return true;
+    },
+  });
+
   const [
     appointmentTimeFormItem,
     appointmentTimeValite,
@@ -140,23 +195,29 @@ function App(props) {
   }
 
   return (
-    <div className="app">
-      <form>
-        {nameFormItem}
-        {dateOfBirthFormItem}
-        {phoneNumberFormItem}
-        {emailFormItem}
-        {addressFormItem}
-        {driveLicenseFormItem}
-        {appointmentTimeFormItem}
-        <div className="submit">
-          <button type="button" onClick={onSubmit} disabled={btnDisabled}>
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+    <Spin spinning={loading}>
+      <div className="app">
+        <form>
+          {nameFormItem}
+          {dateOfBirthFormItem}
+          {phoneNumberFormItem}
+          {emailFormItem}
+          {addressFormItem}
+          {driveLicenseFormItem}
+          {appointmentTimeFormItem}
+          {pwdFormItem}
+          {confirmPwdFormItem}
+          <div className="submit">
+            <button type="button" onClick={onSubmit} disabled={btnDisabled}>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </Spin>
   );
 }
 
-export default connect()(App);
+export default connect((state) => ({
+  loading: state.loading.models.regist || false,
+}))(App);
