@@ -84,8 +84,8 @@ function useFormItem(params) {
             });
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onloadend = (e) => {
-              let { result } = e.target;
+            reader.onloadend = (event) => {
+              const { result } = event.target;
               setPreviewSrc(result);
             };
           } else {
@@ -148,7 +148,12 @@ function useFormItem(params) {
             disabled={uploadDisabled}
           />
           <div style={{ display: 'flex', color: '#666', marginTop: '13px' }}>
-            <img src={logo} width="50%" style={{ marginBottom: '5px' }} />
+            <img
+              src={logo}
+              width="50%"
+              style={{ marginBottom: '5px' }}
+              alt=""
+            />
             Upload
           </div>
         </label>
@@ -156,11 +161,13 @@ function useFormItem(params) {
           <Spin spinning={uploadLoading}>
             <label className={styles.upload}>
               <img
+                alt=""
                 className={styles.delete}
                 src={deleteLogo}
                 onClick={deleteFile}
               />
               <img
+                alt=""
                 className={styles.preview}
                 src={previewSrc}
                 height="100%"
