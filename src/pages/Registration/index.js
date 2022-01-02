@@ -27,7 +27,10 @@ function App(props) {
     label: 'Date of Birth',
     type: 'DATEPICKER',
     required: true,
-    formItemProps: { placeholder: 'Please select your date of birth.' },
+    formItemProps: {
+      placeholder: 'Please select your date of birth.',
+      disabledDate: (current) => current > moment(),
+    },
   });
   const [phoneNumberFormItem, phoneNumberValidate, phoneNumber] = useFormItem({
     label: 'Phone Number',
@@ -155,7 +158,10 @@ function App(props) {
     label: 'Appointment Time',
     type: 'DATEPICKER',
     required: true,
-    formItemProps: { placeholder: 'Please select your appointment time.' },
+    formItemProps: {
+      placeholder: 'Please select your appointment time.',
+      disabledDate: (current) => current < moment(),
+    },
   });
 
   async function onSubmit(e) {
