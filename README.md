@@ -16,6 +16,13 @@ Start the dev server,
 $ yarn start
 ```
 
+## 预览
+
+![alt](./regist.gif)
+
+![alt](./login.gif)
+
+
 ## 项目大致结构
 
 
