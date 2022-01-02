@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { history } from 'umi';
@@ -9,6 +9,7 @@ import { useFormItem } from '../../components';
 function App(props) {
   const { dispatch, loading } = props;
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const firstPwd = useRef(); // 保存第一次输入的密码
 
   const [nameFormItem, nameValidate, name] = useFormItem({
     label: 'Name',
@@ -108,6 +109,9 @@ function App(props) {
       placeholder: 'Please input your password.',
       type: 'password',
     },
+    onValueChange: (value) => {
+      firstPwd.current = value;
+    },
     validator: (value, callback) => {
       // 长度大于6，包含大些字母，包含小写字母，包含数字
       if (get(value, 'length') < 6) {
@@ -139,7 +143,7 @@ function App(props) {
     required: true,
     formItemProps: { placeholder: 'Confirm your password.', type: 'password' },
     validator: (value, callback) => {
-      if (value !== pwd) {
+      if (value !== firstPwd.current) {
         callback('Password is not same.');
         return false;
       }

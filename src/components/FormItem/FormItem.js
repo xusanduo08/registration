@@ -30,6 +30,9 @@ function useFormItem(params) {
   function onValueChange(v) {
     setValue(v);
     setHasError(false);
+    if (typeof params.onValueChange === 'function') {
+      params.onValueChange(v);
+    }
     if (get(v, 'length') === 0 && required) {
       setHasError(true);
       setInfo(`${label} is required!.`);
